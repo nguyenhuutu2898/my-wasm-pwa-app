@@ -1,7 +1,6 @@
 // src/app/layout.tsx
 import './globals.css'; // Đảm bảo bạn có tệp CSS toàn cục
 import React from 'react';
-import SWRegister from './sw-register';
 
 export const metadata = {
   title: 'Next.js PWA Wasm Simple',
@@ -29,7 +28,6 @@ export default function RootLayout({
         <meta name="description" content="Ví dụ Next.js PWA với WebAssemblyScript" />
       </head>
       <body>
-        <SWRegister />
         {children}
       </body>
     </html>
