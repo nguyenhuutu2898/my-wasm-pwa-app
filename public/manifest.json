@@ -3,6 +3,7 @@
   "short_name": "WASMApp",
   "description": "A demo PWA using Next.js + WebAssembly",
   "start_url": "/",
+  "scope": "/",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#8b5cf6",
