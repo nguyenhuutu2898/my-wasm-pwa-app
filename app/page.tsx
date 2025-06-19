@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { subscribeUser, unsubscribeUser, sendNotification } from './actions'
+import Header from './components/header'
 
 function InstallPrompt() {
   const [isIOS, setIsIOS] = useState(false)
@@ -20,21 +21,15 @@ function InstallPrompt() {
   }
 
   return (
-    <div>
-      <h3>Install App</h3>
-      <button>Add to Home Screen</button>
+    <div className="flex flex-col items-center gap-2">
+      <h3 className="text-lg font-semibold mb-2">Install App</h3>
+      <button className="px-4 py-2 bg-violet-600 text-white rounded hover:bg-violet-700 transition">Add to Home Screen</button>
       {isIOS && (
-        <p>
+        <p className="text-sm text-gray-600 mt-2 text-center">
           To install this app on your iOS device, tap the share button
-          <span role="img" aria-label="share icon">
-            {' '}
-            ⎋{' '}
-          </span>
+          <span role="img" aria-label="share icon"> ⎋ </span>
           and then "Add to Home Screen"
-          <span role="img" aria-label="plus icon">
-            {' '}
-            ➕{' '}
-          </span>.
+          <span role="img" aria-label="plus icon"> ➕ </span>.
         </p>
       )}
     </div>
@@ -91,28 +86,29 @@ function PushNotificationManager() {
   }
 
   if (!isSupported) {
-    return <p>Push notifications are not supported in this browser.</p>
+    return <p className="text-red-500">Push notifications are not supported in this browser.</p>
   }
 
   return (
-    <div>
-      <h3>Push Notifications</h3>
+    <div className="flex flex-col items-center gap-3">
+      <h3 className="text-lg font-semibold mb-2">Push Notifications</h3>
       {subscription ? (
         <>
-          <p>You are subscribed to push notifications.</p>
-          <button onClick={unsubscribeFromPush}>Unsubscribe</button>
+          <p className="text-green-600">You are subscribed to push notifications.</p>
+          <button onClick={unsubscribeFromPush} className="px-4 py-2 bg-gray-200 rounded hover:bg-gray-300 transition">Unsubscribe</button>
           <input
             type="text"
             placeholder="Enter notification message"
             value={message}
             onChange={(e) => setMessage(e.target.value)}
+            className="border rounded px-3 py-2 w-full mt-2"
           />
-          <button onClick={sendTestNotification}>Send Test</button>
+          <button onClick={sendTestNotification} className="px-4 py-2 bg-violet-600 text-white rounded hover:bg-violet-700 transition mt-2">Send Test</button>
         </>
       ) : (
         <>
-          <p>You are not subscribed to push notifications.</p>
-          <button onClick={subscribeToPush}>Subscribe</button>
+          <p className="text-gray-600">You are not subscribed to push notifications.</p>
+          <button onClick={subscribeToPush} className="px-4 py-2 bg-violet-600 text-white rounded hover:bg-violet-700 transition">Subscribe</button>
         </>
       )}
     </div>
@@ -132,12 +128,11 @@ function urlBase64ToUint8Array(base64String: string) {
   return outputArray
 }
 
-
 export default function Page() {
   return (
-    <div>
-      <PushNotificationManager />
-      <InstallPrompt />
+    <div className="min-h-screen flex flex-col">
+      <Header />
+
     </div>
   )
 }
