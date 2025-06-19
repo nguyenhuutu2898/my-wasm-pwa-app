@@ -8,13 +8,14 @@ const nextConfig = withPWA({
   register: true,
   skipWaiting: true,
   disable: isDev,
-})({
-  reactStrictMode: true,
-  webpack: (config) => {
-    // ép dùng Webpack thay vì Turbopack
-    return config;
+})(
+  {
+    reactStrictMode: true,
+    webpack: (config) => {
+      // ép dùng Webpack thay vì Turbopack
+      return config;
+    },
   }
-});
-
+);
 
 export default nextConfig;
