@@ -108,7 +108,7 @@ function PushNotificationManager() {
       {subscription ? (
         <>
           <p className="text-green-600">
-            You are subscribed to push notifications.
+            You are subscribed to push notifications.123
           </p>
           <button
             onClick={unsubscribeFromPush}
