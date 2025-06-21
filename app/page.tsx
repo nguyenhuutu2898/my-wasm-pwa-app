@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { subscribeUser, unsubscribeUser, sendNotification } from "./actions";
 import Header from "./components/header";
+import { redirect } from "next/navigation";
 
 function InstallPrompt() {
   const [isIOS, setIsIOS] = useState(false);
@@ -161,11 +162,12 @@ function urlBase64ToUint8Array(base64String: string) {
 }
 
 export default function Page() {
+  redirect("/google-sheet")
   return (
     <div className="min-h-screen flex flex-col">
-      <Header />
-      <InstallPrompt />
-      <PushNotificationManager />
+
+      {/* <InstallPrompt />
+      <PushNotificationManager /> */}
     </div>
   );
 }

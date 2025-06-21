@@ -2,6 +2,7 @@
 import "./globals.css"; // Đảm bảo bạn có tệp CSS toàn cục
 import React from "react";
 import AuthProvider from "./providers";
+import Header from "./components/header";
 
 export const metadata = {
   title: "Next.js PWA Wasm Simple",
@@ -32,7 +33,8 @@ export default function RootLayout({
         />
       </head>
       <body>
-        <AuthProvider>{children}</AuthProvider>
+        <AuthProvider>
+          <Header />{children}</AuthProvider>
       </body>
     </html>
   );

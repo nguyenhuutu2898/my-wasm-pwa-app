@@ -7,7 +7,15 @@ export const authOptions: NextAuthOptions = {
       clientId: process.env.GOOGLE_CLIENT_ID!,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
       authorization: {
-        params: { prompt: "select_account", scope: "openid email profile" },
+        params: {
+          prompt: "select_account", scope: [
+            "openid",
+            "email",
+            "profile",
+            "https://www.googleapis.com/auth/spreadsheets",
+            "https://www.googleapis.com/auth/drive.metadata.readonly", // 👈 dùng để lấy danh sách file
+          ].join(" ")
+        },
       },
     }),
   ],
