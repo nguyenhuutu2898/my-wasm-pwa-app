@@ -6,7 +6,7 @@ interface Props {
     params: { id: string };
 }
 
-const GoogleSheetDetailPage = async ({ params }: Props) => {
+const GoogleSheetDetailPage = async ({ params }: any) => {
     const { id } = await params;
     const session: any = await getServerSession(authOptions);
 
