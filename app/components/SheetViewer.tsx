@@ -33,7 +33,9 @@ const SheetViewer = ({ sheetId, tabNames, accessToken }: Props) => {
     setLoading(true);
     try {
       const res = await fetch(
-        `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}?includeGridData=true&ranges=${encodeURIComponent(tab)}!A1:E50`,
+        `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}?includeGridData=true&ranges=${encodeURIComponent(
+          tab
+        )}!A1:E50`,
         {
           headers: {
             Authorization: `Bearer ${accessToken}`,
@@ -49,9 +51,12 @@ const SheetViewer = ({ sheetId, tabNames, accessToken }: Props) => {
       const metaData: any[][] = values.map((row: any) =>
         (row.values || []).map((cell: any) => ({
           isFormula: !!cell.userEnteredValue?.formulaValue,
-          options: cell.dataValidation?.condition?.type === "ONE_OF_LIST"
-            ? cell.dataValidation.condition.values?.map((v: any) => v.userEnteredValue) || []
-            : null,
+          options:
+            cell.dataValidation?.condition?.type === "ONE_OF_LIST"
+              ? cell.dataValidation.condition.values?.map(
+                  (v: any) => v.userEnteredValue
+                ) || []
+              : null,
           effectiveValue: cell.effectiveValue || null,
         }))
       );
@@ -72,7 +77,9 @@ const SheetViewer = ({ sheetId, tabNames, accessToken }: Props) => {
   }, [selectedTab]);
 
   const handleSave = async () => {
-    const hasChanges = selectedRow?.some((value, idx) => value !== editRow?.[idx]);
+    const hasChanges = selectedRow?.some(
+      (value, idx) => value !== editRow?.[idx]
+    );
 
     if (!hasChanges) {
       alert("Không có thay đổi nào để lưu.");
@@ -124,7 +131,9 @@ const SheetViewer = ({ sheetId, tabNames, accessToken }: Props) => {
           className="ml-2 p-2 border rounded"
         >
           {tabNames.map((name) => (
-            <option key={name} value={name}>{name}</option>
+            <option key={name} value={name}>
+              {name}
+            </option>
           ))}
         </select>
       </div>
@@ -137,7 +146,9 @@ const SheetViewer = ({ sheetId, tabNames, accessToken }: Props) => {
             <thead className="bg-gray-100 font-semibold">
               <tr>
                 {data[0]?.map((header, idx) => (
-                  <th key={idx} className="px-4 py-2 border-b">{header}</th>
+                  <th key={idx} className="px-4 py-2 border-b">
+                    {header}
+                  </th>
                 ))}
               </tr>
             </thead>
@@ -153,7 +164,9 @@ const SheetViewer = ({ sheetId, tabNames, accessToken }: Props) => {
                   className="hover:bg-gray-100 cursor-pointer"
                 >
                   {row.map((cell, cIdx) => (
-                    <td key={cIdx} className="px-4 py-2 border-b">{cell}</td>
+                    <td key={cIdx} className="px-4 py-2 border-b">
+                      {cell}
+                    </td>
                   ))}
                 </tr>
               ))}
@@ -166,8 +179,10 @@ const SheetViewer = ({ sheetId, tabNames, accessToken }: Props) => {
 
       {selectedRow && (
         <div className="fixed inset-0 bg-black bg-opacity-30 flex items-center justify-center z-50">
-          <div className="bg-white rounded-md p-6 shadow-lg max-w-lg w-full relative">
-            <h2 className="text-lg font-semibold mb-4">📝 Chi tiết dòng đã chọn</h2>
+          <div className="bg-white text-black rounded-md p-6 shadow-lg max-w-lg w-full relative">
+            <h2 className="text-lg font-semibold mb-4">
+              📝 Chi tiết dòng đã chọn
+            </h2>
             <form className="space-y-4 text-sm">
               {data[0].map((col, idx) => {
                 const cellMeta = gridMeta[selectedRowIndex! - 2]?.[idx] || {};
@@ -181,18 +196,40 @@ const SheetViewer = ({ sheetId, tabNames, accessToken }: Props) => {
                     {options ? (
                       <select
                         value={editRow?.[idx] ?? ""}
-                        onChange={(e) => setEditRow(prev => prev ? [...prev.slice(0, idx), e.target.value, ...prev.slice(idx + 1)] : prev)}
+                        onChange={(e) =>
+                          setEditRow((prev) =>
+                            prev
+                              ? [
+                                  ...prev.slice(0, idx),
+                                  e.target.value,
+                                  ...prev.slice(idx + 1),
+                                ]
+                              : prev
+                          )
+                        }
                         disabled={isFormulaCell}
                         className="w-full border px-2 py-1 rounded"
                       >
                         {options.map((opt: string, i: number) => (
-                          <option key={i} value={opt}>{opt}</option>
+                          <option key={i} value={opt}>
+                            {opt}
+                          </option>
                         ))}
                       </select>
                     ) : fieldType === "boolean" ? (
                       <select
                         value={editRow?.[idx] ?? ""}
-                        onChange={(e) => setEditRow(prev => prev ? [...prev.slice(0, idx), e.target.value, ...prev.slice(idx + 1)] : prev)}
+                        onChange={(e) =>
+                          setEditRow((prev) =>
+                            prev
+                              ? [
+                                  ...prev.slice(0, idx),
+                                  e.target.value,
+                                  ...prev.slice(idx + 1),
+                                ]
+                              : prev
+                          )
+                        }
                         disabled={isFormulaCell}
                         className="w-full border px-2 py-1 rounded"
                       >
@@ -202,18 +239,54 @@ const SheetViewer = ({ sheetId, tabNames, accessToken }: Props) => {
                     ) : fieldType === "date" ? (
                       <input
                         type="date"
-                        value={(editRow?.[idx]?.substring(0, 10)) ?? ""}
-                        onChange={(e) => setEditRow(prev => prev ? [...prev.slice(0, idx), e.target.value, ...prev.slice(idx + 1)] : prev)}
+                        value={editRow?.[idx]?.substring(0, 10) ?? ""}
+                        onChange={(e) =>
+                          setEditRow((prev) =>
+                            prev
+                              ? [
+                                  ...prev.slice(0, idx),
+                                  e.target.value,
+                                  ...prev.slice(idx + 1),
+                                ]
+                              : prev
+                          )
+                        }
                         readOnly={isFormulaCell}
-                        className={`w-full border px-2 py-1 rounded ${editRow?.[idx] !== selectedRow?.[idx] ? "bg-yellow-50 border-yellow-400" : ""} ${isFormulaCell ? "bg-gray-100 text-gray-400 cursor-not-allowed" : ""}`}
+                        className={`w-full border px-2 py-1 rounded ${
+                          editRow?.[idx] !== selectedRow?.[idx]
+                            ? "bg-yellow-50 border-yellow-400"
+                            : ""
+                        } ${
+                          isFormulaCell
+                            ? "bg-gray-100 text-gray-400 cursor-not-allowed"
+                            : ""
+                        }`}
                       />
                     ) : (
                       <input
                         type={fieldType}
                         value={editRow?.[idx] ?? ""}
-                        onChange={(e) => setEditRow(prev => prev ? [...prev.slice(0, idx), e.target.value, ...prev.slice(idx + 1)] : prev)}
+                        onChange={(e) =>
+                          setEditRow((prev) =>
+                            prev
+                              ? [
+                                  ...prev.slice(0, idx),
+                                  e.target.value,
+                                  ...prev.slice(idx + 1),
+                                ]
+                              : prev
+                          )
+                        }
                         readOnly={isFormulaCell}
-                        className={`w-full border px-2 py-1 rounded ${editRow?.[idx] !== selectedRow?.[idx] ? "bg-yellow-50 border-yellow-400" : ""} ${isFormulaCell ? "bg-gray-100 text-gray-400 cursor-not-allowed" : ""}`}
+                        className={`w-full border px-2 py-1 rounded ${
+                          editRow?.[idx] !== selectedRow?.[idx]
+                            ? "bg-yellow-50 border-yellow-400"
+                            : ""
+                        } ${
+                          isFormulaCell
+                            ? "bg-gray-100 text-gray-400 cursor-not-allowed"
+                            : ""
+                        }`}
                       />
                     )}
                   </div>
